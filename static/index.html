@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MindWell AI - Student wellbeing score prediction system">
+<title>MindWell AI | Student Wellbeing Predictor</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+
+<body>
+<main class="container">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">MindWell AI</div>
+        <span class="brand-sub">Student wellbeing analytics</span>
+      </div>
+    </div>
+    <div class="status"><span class="status-dot"></span> Prediction service ready</div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow"><span></span> AI-POWERED WELLBEING PREDICTION</div>
+    <h1>Understand the patterns behind student wellbeing.</h1>
+    <p>
+      Enter a student's academic routine, social-media habits and daily lifestyle.
+      The trained machine-learning model estimates a wellbeing score on a 1–10 scale.
+    </p>
+  </section>
+
+  <section class="metrics" aria-label="Model information">
+    <div class="metric">
+      <span class="metric-label">Model</span>
+      <div class="metric-value" id="modelName">Random Forest</div>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Test R²</span>
+      <div class="metric-value" id="r2">—</div>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Training records</span>
+      <div class="metric-value" id="rows">—</div>
+    </div>
+  </section>
+
+  <section class="workspace">
+
+    <form class="card form-card" id="form" novalidate>
+      <div class="card-head">
+        <div>
+          <h2 class="card-title">Student profile</h2>
+          <p class="card-description">Provide the information used by the prediction model.</p>
+        </div>
+        <div class="step">01</div>
+      </div>
+
+      <fieldset>
+        <legend>Personal & academic information</legend>
+        <div class="fields">
+          <div class="field">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" min="10" max="100" value="21" required>
+          </div>
+
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+              <option>Female</option>
+              <option>Male</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="academic_level">Education level</label>
+            <select id="academic_level" name="academic_level">
+              <option>Undergraduate</option>
+              <option>Graduate</option>
+              <option>High School</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="country">Country</label>
+            <select id="country" name="country"></select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Social media behaviour</legend>
+        <div class="fields">
+          <div class="field">
+            <label for="most_used_platform">Most used platform</label>
+            <select id="most_used_platform" name="most_used_platform">
+              <option>Instagram</option><option>TikTok</option><option>YouTube</option>
+              <option>WhatsApp</option><option>Facebook</option><option>Twitter</option>
+              <option>Snapchat</option><option>LinkedIn</option><option>WeChat</option>
+              <option>LINE</option><option>KakaoTalk</option><option>VKontakte</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="purpose_of_use">Main purpose</label>
+            <select id="purpose_of_use" name="purpose_of_use">
+              <option>Entertainment</option><option>Networking</option>
+              <option>Education</option><option>News</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="avg_daily_usage_hours">Daily usage</label>
+            <input id="avg_daily_usage_hours" name="avg_daily_usage_hours" type="number"
+                   step="0.1" min="0" max="24" value="4.5" required>
+            <span class="hint">Hours per day</span>
+          </div>
+
+          <div class="field">
+            <label for="daily_unlocks">Phone unlocks</label>
+            <input id="daily_unlocks" name="daily_unlocks" type="number"
+                   min="0" max="2000" value="100" required>
+            <span class="hint">Times per day</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Daily routine</legend>
+        <div class="fields">
+          <div class="field">
+            <label for="study_hours">Study time</label>
+            <input id="study_hours" name="study_hours" type="number"
+                   step="0.1" min="0" max="24" value="4" required>
+            <span class="hint">Hours per day</span>
+          </div>
+
+          <div class="field">
+            <label for="physical_activity_hours">Physical activity</label>
+            <input id="physical_activity_hours" name="physical_activity_hours" type="number"
+                   step="0.1" min="0" max="24" value="1" required>
+            <span class="hint">Hours per day</span>
+          </div>
+
+          <div class="field">
+            <label for="sleep_hours_per_night">Sleep</label>
+            <input id="sleep_hours_per_night" name="sleep_hours_per_night" type="number"
+                   step="0.1" min="0" max="24" value="7" required>
+            <span class="hint">Hours per night</span>
+          </div>
+
+          <div class="field">
+            <label for="stress_level">Stress level</label>
+            <select id="stress_level" name="stress_level">
+              <option>Low</option>
+              <option selected>Medium</option>
+              <option>High</option>
+              <option>Very High</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <button class="primary-btn" id="go" type="submit">
+        Generate wellbeing prediction →
+      </button>
+      <p class="error" id="err" role="alert" hidden></p>
+    </form>
+
+    <section class="card result-card" aria-live="polite">
+      <div class="result-top">
+        <span class="result-label">Prediction result</span>
+        <span class="live">● LIVE MODEL</span>
+      </div>
+
+      <div class="empty-state" id="empty">
+        <div class="empty-icon">AI</div>
+        <strong>Your prediction will appear here</strong>
+        <p>Complete the profile and select “Generate wellbeing prediction” to run the model.</p>
+      </div>
+
+      <div class="prediction" id="out">
+        <div class="score-wrap">
+          <div class="score"><span id="num">0.0</span><small> / 10</small></div>
+          <div class="band" id="band">Prediction generated</div>
+        </div>
+
+        <div class="scale" aria-label="Score scale">
+          <div class="pin" id="pin"></div>
+        </div>
+        <div class="scale-labels"><span>1 — Lower</span><span>5</span><span>10 — Higher</span></div>
+
+        <div class="divider"></div>
+
+        <div class="insight">
+          <div class="insight-title">How to interpret this</div>
+          <p id="insightText">
+            This score represents a pattern-based estimate generated from the information provided.
+          </p>
+        </div>
+
+        <p class="disclaimer">
+          This is a machine-learning estimate based on survey patterns, not a medical diagnosis
+          or clinical assessment. Typical model error is approximately <strong><span id="mae">0.35</span> points</strong>.
+        </p>
+      </div>
+    </section>
+
+  </section>
+
+  <footer>
+    <span>MindWell AI • Python • Scikit-learn • FastAPI</span>
+    <a href="https://github.com/your-username/your-repo" target="_blank" rel="noopener">View project on GitHub ↗</a>
+  </footer>
+
+</main>
+
+</body>
+</html>
